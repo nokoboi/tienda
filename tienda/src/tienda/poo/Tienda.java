@@ -9,12 +9,12 @@ import java.util.Map.Entry;
 public class Tienda {
     private String nombre_tienda;
     private HashMap<String,Producto> almacen;
-    
+    ////////1
     public Tienda(String nombre_tienda){
         this.nombre_tienda=nombre_tienda;
         this.almacen=new HashMap<>();
     }
-    
+    ////////2
     public String toString(){
         String res="";
         
@@ -32,7 +32,7 @@ public class Tienda {
         
         return res;
     }
-    
+    ////////3
     public String filtrarNombre(String nombre){
         String res="";
         
@@ -52,7 +52,7 @@ public class Tienda {
     private Producto buscarProd(String nombre){
         return this.almacen.get(nombre);
     }
-    
+    ////////4
     public void añadirProd(String producto,double precio,double pr_un,int stock,char cat,String fabricante){
         Producto nuevo,busqueda;
         
@@ -67,7 +67,7 @@ public class Tienda {
             System.out.println("Error. El producto ya existe.");
         }
     }
-    
+    ////////5
     public void borrarProd(String nombre){
         Producto busqueda;
         
@@ -79,7 +79,7 @@ public class Tienda {
             System.out.println("El producto no existe");
         }
     }
-    
+    ////////6
     public void venderProd(String nombre,int cantidad){
         Producto busqueda;
         
@@ -92,13 +92,17 @@ public class Tienda {
         }
     }
     //REPONER STOCK
-//    public void stock(){
-//        Producto busqueda;
-//        
-//        busqueda=this.buscarProd(nombre_tienda)
-//    }
+    public void stock(){
+        for (Producto prod : this.almacen.values()) {
+            if(prod.getStock()>0 && prod.getStock()<prod.getUnidades()){
+              int stock_actual=prod.getStock();
+              int aumento=stock_actual*20/100;
+              prod.reponerStock(aumento);
+            }                
+        }
+    }
     ////////////////////////
-    
+    ////////8
     public String alfabetica(){
         String res="";
         
@@ -112,7 +116,7 @@ public class Tienda {
         
         return res;
     }
-    
+    ////////9
     private ArrayList<Producto> beneficioTotal(){
         ArrayList<Producto> res=new ArrayList<>();
         
@@ -122,7 +126,7 @@ public class Tienda {
         
         return res;
     }
-    
+    ////////10
     public String menorBeneficio(){
         String res="";
         Producto menor;
@@ -139,7 +143,7 @@ public class Tienda {
         
         return res;
     }
-    
+    ////////11
     public void aumentarPrecio(String nombre,double cantidad){
         Producto busqueda;
         
@@ -151,7 +155,7 @@ public class Tienda {
             System.out.println("El producto no existe.");
         }
     }
-    
+    ////////12
     public void rebajar(String nombre,double cantidad){
         Producto busqueda;
         
@@ -162,7 +166,7 @@ public class Tienda {
             System.out.println("El producto no existe.");
         }
     }
-    
+    ////////13
     public void borrarProd(){//PREGUNTAR, PORQUE SIEMPRE VA A HABER MÁS STOCK QUE VENTAS
         Iterator<Producto> iter=this.almacen.values().iterator();
         
@@ -173,7 +177,7 @@ public class Tienda {
             }
         }
     }
-    
+    ////////14
     private ArrayList<Producto> porCategoria(char cat){
         ArrayList<Producto> res=new ArrayList<>();
         
@@ -203,11 +207,11 @@ public class Tienda {
         
         return res;
     }
-    
+    ////////15
     //PENULTIMA
     
     //
-    
+    ////////15
     private HashMap<String,Integer> totalDist(){
         HashMap<String,Integer> sumaDis=new HashMap<>();
         

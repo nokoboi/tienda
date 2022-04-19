@@ -81,6 +81,10 @@ public class Producto {
     public char getCat() {
         return cat;
     }
+    
+    public String getNomCat(char cat){
+        return this.tipos.get(cat);
+    }
 
     public double getPr_un() {
         return pr_un;
