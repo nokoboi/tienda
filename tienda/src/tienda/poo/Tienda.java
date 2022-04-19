@@ -126,7 +126,7 @@ public class Tienda {
         
         return res;
     }
-    ////////10
+
     public String menorBeneficio(){
         String res="";
         Producto menor;
@@ -208,10 +208,28 @@ public class Tienda {
         return res;
     }
     ////////15
-    //PENULTIMA
+    private HashMap<String,Double> totalTipos(){
+        HashMap<String,Double> suma=new HashMap<>();
+        
+        for (Producto prod : this.almacen.values()) {
+            
+        }
+        
+        return suma;
+    }
+    
+    public String beneficiosCat(){
+        String res="";
+        
+        for (Producto prod : this.almacen.values()) {
+            
+        }
+        
+        return res;
+    }
     
     //
-    ////////15
+    ////////16
     private HashMap<String,Integer> totalDist(){
         HashMap<String,Integer> sumaDis=new HashMap<>();
         
