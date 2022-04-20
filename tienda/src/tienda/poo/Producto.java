@@ -125,6 +125,8 @@ public class Producto {
     public void vender(int cantidad){
         if(cantidad>this.stock){
             System.out.println("No hay suficiente stock");
+            this.unidades+=this.stock;
+            this.stock=0;
         }else{
             this.stock-=cantidad;
             this.unidades+=cantidad;

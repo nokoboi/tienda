@@ -19,7 +19,7 @@ public class Tienda {
         String res="";
         
         res+="=====================\n";
-        res+="Nombre de la tienda "+this.nombre_tienda;
+        res+="Nombre de la tienda "+this.nombre_tienda+"\n";
         if(this.almacen.values().size()>0){
             for (Producto pro : this.almacen.values()) {
                 res+=pro.toString()+"\n";
@@ -59,8 +59,7 @@ public class Tienda {
         busqueda=this.buscarProd(producto);
         
         if(busqueda==null){
-            nuevo=new Producto(producto,precio,stock,cat,fabricante,pr_un);
-            stock=0;
+            nuevo=new Producto(producto,precio,stock,0,cat,fabricante,pr_un);
             this.almacen.put(producto, nuevo);
             System.out.println("Producto añadido");
         }else{
@@ -68,7 +67,7 @@ public class Tienda {
         }
     }
     ////////5
-    public void borrarProd(String nombre){
+    public void borrarProdNom(String nombre){
         Producto busqueda;
         
         busqueda=this.buscarProd(nombre);
