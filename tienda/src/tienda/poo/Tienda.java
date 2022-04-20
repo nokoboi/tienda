@@ -208,11 +208,16 @@ public class Tienda {
         return res;
     }
     ////////15
-    private HashMap<String,Double> totalTipos(){
-        HashMap<String,Double> suma=new HashMap<>();
+    private HashMap<Character,Double> totalTipos(){
+        HashMap<Character,Double> suma=new HashMap<>();
         
         for (Producto prod : this.almacen.values()) {
-            
+            if(suma.containsKey(prod.getCat())){
+                double actual=suma.get(prod.getCat());
+                suma.put(prod.getCat(),actual+prod.beneficio());
+            }else{
+                suma.put(prod.getCat(),prod.beneficio());
+            }
         }
         
         return suma;
@@ -221,8 +226,10 @@ public class Tienda {
     public String beneficiosCat(){
         String res="";
         
-        for (Producto prod : this.almacen.values()) {
-            
+        HashMap<Character,Double> suma=this.totalTipos();
+        
+        for (Entry<Character,Double> entrada:suma.entrySet()) {
+            res+=Producto.getNomCat(entrada.getKey())+"->"+entrada.getValue()+"\n";
         }
         
         return res;

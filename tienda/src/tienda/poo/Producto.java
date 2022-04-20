@@ -22,6 +22,7 @@ public class Producto {
                     put('C',"Cerveza");
                     put('V',"Vino");
                     put('G',"Ginebra");
+                    put('R',"Ron");
                 }
             };
 
@@ -82,8 +83,8 @@ public class Producto {
         return cat;
     }
     
-    public String getNomCat(char cat){
-        return this.tipos.get(cat);
+    public static String getNomCat(char cat){
+        return tipos.get(cat);
     }
 
     public double getPr_un() {
@@ -166,7 +167,7 @@ public class Producto {
                 this.codigo+"\n"+
                 "Nombre: "+this.producto+"\n";
                 res+="Categoría:";
-                res+=this.tipos.get(this.cat);
+                res+=tipos.get(this.cat);
                 res+="Precio: "+this.precio+"\n"+
                 "Stock: "+this.stock+"\n"+
                 "Unidades vendidas: "+this.unidades+"\n"+
