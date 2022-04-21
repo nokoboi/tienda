@@ -255,9 +255,13 @@ public class Tienda {
         ArrayList<Entry<String,Integer>> entradas=new ArrayList<>(this.totalDist().entrySet());
         String prov;
         
-        entradas.sort((a,b)->Integer.compare(b.getValue(),a.getValue()));
+        if(this.almacen.size()>0){
+            entradas.sort((a,b)->Integer.compare(b.getValue(),a.getValue()));        
+            prov=entradas.get(0).getKey()+" con "+entradas.get(0).getValue();
+        }else{
+            prov="NO HAY PRODUCTOS ACTUALMENTE.";
+        }
         
-        prov=entradas.get(0).getKey()+" con "+entradas.get(0).getValue();
         
         return prov;
     }

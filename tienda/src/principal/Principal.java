@@ -37,7 +37,7 @@ public class Principal {
             System.out.println("12.Más caro por categoría");//BIEN
             System.out.println("13.Beneficios por categoría");//BIEN
             System.out.println("14.Fabricante más vendido");//BIEN
-            System.out.println("Elige una opción");
+            System.out.println("Elige una opción");//BIEN
             opcion=teclado.nextInt();
             teclado.nextLine();
             switch(opcion){
