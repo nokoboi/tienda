@@ -169,7 +169,7 @@ public class Producto {
                 this.codigo+"\n"+
                 "Nombre: "+this.producto+"\n";
                 res+="Categoría:";
-                res+=tipos.get(this.cat);
+                res+=tipos.get(this.cat)+"\n";
                 res+="Precio: "+this.precio+"\n"+
                 "Stock: "+this.stock+"\n"+
                 "Unidades vendidas: "+this.unidades+"\n"+
