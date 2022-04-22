@@ -124,22 +124,22 @@ public class Producto {
     
     public void vender(int cantidad){
         if(cantidad>this.stock){
-            System.out.println("No hay suficiente stock");
+            System.out.println("No hay suficiente stock, se han vendido "+this.stock);
             this.unidades+=this.stock;
             this.stock=0;
         }else{
             this.stock-=cantidad;
             this.unidades+=cantidad;
-            System.out.println("Compra realizada con éxito");
+            System.out.println("Venta realizada con éxito");
         }
     }
     
     public void cambiarTipo(char tipo){
-        if(tipo=='W' || tipo=='C' || tipo=='V' || tipo=='R' ||
-                tipo=='G'){
+        if(this.tipos.containsKey(tipo)){
             this.cat=tipo;
+            System.out.println("Categoría cambiada con éxito");
         }else{
-            System.out.println("Error. Categoría errónea");
+            System.out.println("Categoría errónea");
         }
     }
     

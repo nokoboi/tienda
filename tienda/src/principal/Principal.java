@@ -23,21 +23,21 @@ public class Principal {
         
         do{
             System.out.println("0.Salir");
-            System.out.println("1.Ver todos los productos");//BIEN
-            System.out.println("2.Filtrar productos por nombre");//BIEN
-            System.out.println("3.Añadir producto");//BIEN
-            System.out.println("4.Borrar producto por nombre");//BIEN
-            System.out.println("5.Vender producto");//BIEN
-            System.out.println("6.Reponer producto");//BIEN
-            System.out.println("7.Productos en orden alfabético");//BIEN
-            System.out.println("8.Producto con menor beneficio");//BIEN
-            System.out.println("9.Subir precio");//BIEN
-            System.out.println("10.Bajar precio");//BIEN
-            System.out.println("11.Borrar producto con pocas ventas");//BIEN
-            System.out.println("12.Más caro por categoría");//BIEN
-            System.out.println("13.Beneficios por categoría");//BIEN
-            System.out.println("14.Fabricante más vendido");//BIEN
-            System.out.println("Elige una opción");//BIEN
+            System.out.println("1.Ver todos los productos");
+            System.out.println("2.Filtrar productos por nombre");
+            System.out.println("3.Añadir producto");
+            System.out.println("4.Borrar producto por nombre");
+            System.out.println("5.Vender producto");
+            System.out.println("6.Reponer producto");
+            System.out.println("7.Productos en orden alfabético");
+            System.out.println("8.Producto con menor beneficio");
+            System.out.println("9.Subir precio");
+            System.out.println("10.Bajar precio");
+            System.out.println("11.Borrar producto con pocas ventas");
+            System.out.println("12.Más caro por categoría");
+            System.out.println("13.Beneficios por categoría");
+            System.out.println("14.Fabricante más vendido");
+            System.out.println("Elige una opción");
             opcion=teclado.nextInt();
             teclado.nextLine();
             switch(opcion){
