@@ -1,6 +1,8 @@
 package principal;
+import java.util.InputMismatchException;
 import tienda.poo.Tienda;
 import java.util.Scanner;
+import tienda.poo.TiendaException;
 public class Principal {
     
     public static void main (String[] args){
@@ -16,12 +18,13 @@ public class Principal {
         n_tienda.añadirProd("Tanqueray", 32.95, 27.8, 40, 'G', "Diageo España S.A");
         n_tienda.añadirProd("Barceló", 14.30, 10.75, 50, 'R', "Ron Barceló S.R.L");
         
-        int opcion,stock,cantidad;
+        int opcion=1,stock,cantidad;
         double precio,pr_un;
         String nombre,dis;
         char cat;
         
         do{
+            try{
             System.out.println("0.Salir");
             System.out.println("1.Ver todos los productos");
             System.out.println("2.Filtrar productos por nombre");
@@ -121,8 +124,15 @@ public class Principal {
                     break;
                 case 14:
                     System.out.println(n_tienda.proveedorMasVendido());
-                    break;        
-                }                    
+                    break;  
+                default:
+                    System.out.println("Opción incorrecta.");
+                }        
+            }catch(InputMismatchException ime){
+                System.out.println("Formato de entrada inválido");
+            }catch(TiendaException te){
+                System.out.println(te.getMessage());
+            }
         }while(opcion!=0);
         
     }

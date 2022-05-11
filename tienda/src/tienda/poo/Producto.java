@@ -1,9 +1,9 @@
-
 package tienda.poo;
 
 import java.util.HashMap;
 
 public class Producto {
+
     //ATRIBUTOS
     private int codigo;
     private String producto;
@@ -13,44 +13,53 @@ public class Producto {
     private char cat;
     private double pr_un;
     private String fabricante;
-    private static int contador=1;
-    
-     private final static HashMap<Character,String> tipos=
-            new HashMap<>(){
-                {
-                    put('W',"Whisky");
-                    put('C',"Cerveza");
-                    put('V',"Vino");
-                    put('G',"Ginebra");
-                    put('R',"Ron");
-                }
-            };
+    private static int contador = 1;
 
-    public Producto(String producto, double precio, int stock, int unidades, char cat, String fabricante,double precio_un) {
-        this.producto = producto;
-        this.precio = precio;
-        this.stock = stock;
-        this.unidades = unidades;
-        this.cat = cat;
-        this.fabricante = fabricante;
-        this.pr_un=precio_un;
-        this.codigo=this.contador;
-        this.contador++;
+    private final static HashMap<Character, String> tipos
+            = new HashMap<>() {
+        {
+            put('W', "Whisky");
+            put('C', "Cerveza");
+            put('V', "Vino");
+            put('G', "Ginebra");
+            put('R', "Ron");
+        }
+    };
+
+    public Producto(String producto, double precio, int stock, int unidades, char cat, String fabricante, double precio_un) {
+        if (!producto.equals("") && precio > 0 && stock > 0 && unidades > 0 && this.tipos.containsKey(cat) && fabricante.equals("") && precio_un > 0) {
+            this.producto = producto;
+            this.precio = precio;
+            this.stock = stock;
+            this.unidades = unidades;
+            this.cat = cat;
+            this.fabricante = fabricante;
+            this.pr_un = precio_un;
+            this.codigo = this.contador;
+            this.contador++;
+        } else {
+            throw new TiendaException("ERROR: Datos de tienda incorrectos.");
+        }
+
     }
 
-    public Producto(String producto, double precio, int stock, char cat, String fabricante,double precio_un) {
-        this.producto = producto;
-        this.precio = precio;
-        this.stock = stock;
-        this.cat = cat;
-        this.fabricante = fabricante;
-        this.pr_un=precio_un;
-        this.unidades=0;
-        this.codigo=this.contador;
-        this.contador++;
+    public Producto(String producto, double precio, int stock, char cat, String fabricante, double precio_un) {
+        if (!producto.equals("") && precio > 0 && stock > 0 && this.tipos.containsKey(cat) && fabricante.equals("") && precio_un > 0) {
+            this.producto = producto;
+            this.precio = precio;
+            this.stock = stock;
+            this.cat = cat;
+            this.fabricante = fabricante;
+            this.pr_un = precio_un;
+            this.unidades = 0;
+            this.codigo = this.contador;
+            this.contador++;
+        }else{
+            throw new TiendaException("ERROR: DAtos de tienda incorrectos");
+        }
     }
-    
-    public Producto(Producto c){
+
+    public Producto(Producto c) {
         this.producto = c.producto;
         this.precio = c.precio;
         this.stock = c.stock;
@@ -82,8 +91,8 @@ public class Producto {
     public char getCat() {
         return cat;
     }
-    
-    public static String getNomCat(char cat){
+
+    public static String getNomCat(char cat) {
         return tipos.get(cat);
     }
 
@@ -94,95 +103,86 @@ public class Producto {
     public String getFabricante() {
         return fabricante;
     }
-    
-    public double beneficio(){
+
+    public double beneficio() {
         double resta, p_venta, p_prod;
-        p_venta=this.precio*this.unidades;
-        p_prod=this.pr_un*this.unidades;
-        resta=p_venta-p_prod;
-        
+        p_venta = this.precio * this.unidades;
+        p_prod = this.pr_un * this.unidades;
+        resta = p_venta - p_prod;
+
         return resta;
     }
-    
-    public void subirPrecio(double precio){
-        if(this.precio<precio){
-            this.precio+=precio;
-            System.out.println("Actualizado con éxito");
-        }else{
-            System.out.println("Error. El precio no puede ser menor que el actual");
+
+    public void subirPrecio(double precio) {
+        if (this.precio < precio) {
+            this.precio += precio;
+        } else {
+            throw new TiendaException("Error. El precio no puede ser menor que el actual");
         }
     }
-    
-    public void bajarPrecio(double precio){
-        if((this.precio-precio)>this.pr_un){
-            this.precio-=precio;
-            System.out.println("Actualizado con éxito");
-        }else{
-            System.out.println("Error. El precio no puede ser menor que el precio de coste");
+
+    public void bajarPrecio(double precio) {
+        if ((this.precio - precio) > this.pr_un) {
+            this.precio -= precio;
+        } else {
+            throw new TiendaException("Error. El precio no puede ser menor que el precio de coste");
         }
     }
-    
-    public void vender(int cantidad){
-        if(cantidad>this.stock){
-            System.out.println("No hay suficiente stock, se han vendido "+this.stock);
-            this.unidades+=this.stock;
-            this.stock=0;
-        }else{
-            this.stock-=cantidad;
-            this.unidades+=cantidad;
-            System.out.println("Venta realizada con éxito");
+
+    public void vender(int cantidad) {
+        if (cantidad > this.stock) {
+            System.out.println("No hay suficiente stock, se han vendido " + this.stock);
+            this.unidades += this.stock;
+            this.stock = 0;
+        } else {
+            this.stock -= cantidad;
+            this.unidades += cantidad;
+            throw new TiendaException("Venta realizada con éxito");
         }
     }
-    
-    public void cambiarTipo(char tipo){
-        if(this.tipos.containsKey(tipo)){
-            this.cat=tipo;
-            System.out.println("Categoría cambiada con éxito");
-        }else{
-            System.out.println("Categoría errónea");
+
+    public void cambiarTipo(char tipo) {
+        if (this.tipos.containsKey(tipo)) {
+            this.cat = tipo;
+        } else {
+            throw new TiendaException("Categoría errónea");
         }
     }
-    
-    public void reponerStock(int stock){
-        this.stock+=stock;
+
+    public void reponerStock(int stock) {
+        this.stock += stock;
         System.out.println("Stock repuesto con éxito");
     }
-    
-    public void cambiarPu(double precio){
-        if(precio>0){
-            if(precio<this.precio){
-                this.pr_un=precio;
-                System.out.println("Precio unitario cambiado exitosamente");
-            }else{
-                System.out.println("Error. El precio no puede superar el precio de venta");
+
+    public void cambiarPu(double precio) {
+        if (precio > 0) {
+            if (precio < this.precio) {
+                this.pr_un = precio;
+            } else {
+                throw new TiendaException("Error. El precio no puede superar el precio de venta");
             }
-        }else{
-            System.out.println("Error. El precio no puede ser cero.");
+        } else {
+            throw new TiendaException("Error. El precio no puede ser cero.");
         }
-        
+
     }
-    
-    public String toString(){
-       String res="";
-       
-       res="=========================\n"+
-                this.codigo+"\n"+
-                "Nombre: "+this.producto+"\n";
-                res+="Categoría:";
-                res+=tipos.get(this.cat)+"\n";
-                res+="Precio: "+this.precio+"\n"+
-                "Stock: "+this.stock+"\n"+
-                "Unidades vendidas: "+this.unidades+"\n"+
-                "Coste por unidad: "+this.pr_un+"\n"+
-                "Fabricante: "+this.fabricante+"\n"+
-                "=========================";              
-                
-       return res;
+
+    public String toString() {
+        String res = "";
+
+        res = "=========================\n"
+                + this.codigo + "\n"
+                + "Nombre: " + this.producto + "\n";
+        res += "Categoría:";
+        res += tipos.get(this.cat) + "\n";
+        res += "Precio: " + this.precio + "\n"
+                + "Stock: " + this.stock + "\n"
+                + "Unidades vendidas: " + this.unidades + "\n"
+                + "Coste por unidad: " + this.pr_un + "\n"
+                + "Fabricante: " + this.fabricante + "\n"
+                + "=========================";
+
+        return res;
     }
-    
-    
-    
-    
-    
-    
+
 }
