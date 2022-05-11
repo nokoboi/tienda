@@ -130,6 +130,7 @@ public class Principal {
                 }        
             }catch(InputMismatchException ime){
                 System.out.println("Formato de entrada inválido");
+                teclado.nextLine();
             }catch(TiendaException te){
                 System.out.println(te.getMessage());
             }
