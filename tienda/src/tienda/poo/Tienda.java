@@ -1,5 +1,11 @@
 package tienda.poo;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -27,7 +33,7 @@ public class Tienda {
                 res += pro.toString() + "\n";
             }
         } else {
-            res += "NO HAY DATOS AÚN";
+            res += "NO HAY DATOS AÚN\n";
         }
 
         res += "=====================\n";
@@ -63,11 +69,10 @@ public class Tienda {
         busqueda = this.buscarProd(producto);
 
         if (busqueda == null) {
-            nuevo = new Producto(producto, precio, stock, 0, cat, fabricante, pr_un);
+            nuevo = new Producto(producto, precio, pr_un, stock, 0, cat, fabricante);
             this.almacen.put(producto, nuevo);
-            System.out.println("Producto añadido");
         } else {
-            System.out.println("Error. El producto ya existe.");
+           throw new TiendaException("Error. El producto ya existe.");
         }
     }
 
@@ -78,9 +83,8 @@ public class Tienda {
         busqueda = this.buscarProd(nombre);
         if (busqueda != null) {
             this.almacen.remove(nombre);
-            System.out.println("Producto borrado con éxito");
         } else {
-            System.out.println("El producto no existe");
+            throw new TiendaException("El producto no existe");
         }
     }
 
@@ -93,7 +97,7 @@ public class Tienda {
         if (busqueda != null) {
             busqueda.vender(cantidad);
         } else {
-            System.out.println("El producto no existe");
+            throw new TiendaException("El producto no existe");
         }
     }
 
@@ -104,7 +108,6 @@ public class Tienda {
                 int stock_actual = prod.getStock();
                 int aumento = stock_actual * 20 / 100;
                 prod.reponerStock(aumento);
-                System.out.println("Aumento realizado");
             }
         }
     }
@@ -165,7 +168,7 @@ public class Tienda {
         if (busqueda != null) {
             busqueda.subirPrecio(cantidad);
         } else {
-            System.out.println("El producto no existe.");
+            throw new TiendaException("El producto no existe.");
         }
     }
 
@@ -177,7 +180,7 @@ public class Tienda {
         if (busqueda != null) {
             busqueda.bajarPrecio(cantidad);
         } else {
-            System.out.println("El producto no existe.");
+            throw new TiendaException("El producto no existe.");
         }
     }
 
@@ -289,6 +292,69 @@ public class Tienda {
         }
 
         return prov;
+    }
+    
+    public void cargarProducto(String nombre_fichero){
+        try{
+            FileReader fr=new FileReader(nombre_fichero);
+            BufferedReader br=new BufferedReader(fr);
+            String linea,producto,fabricante;
+            String[] partes,cabecera;
+            double precio,precio_un;
+            int stock,unidades;
+            char cat;
+            
+            HashMap<String,String> datos=new HashMap<>();
+            linea=br.readLine();
+            cabecera=linea.split(":");
+            
+            while((linea=br.readLine())!=null){
+                partes=linea.split(":");
+                
+                for (int i = 0; i < cabecera.length; i++) {
+                    datos.put(cabecera[i],partes[i]);
+                }
+                
+                producto=datos.get("producto");
+                precio=Double.parseDouble(datos.get("precio"));
+                stock=Integer.parseInt(datos.get("stock"));
+                unidades=Integer.parseInt(datos.get("unidades"));
+                cat=datos.get("cat").charAt(0);
+                fabricante=datos.get("fabricante");
+                precio_un=Double.parseDouble(datos.get("precio_un"));
+                
+                this.añadirProd(producto, precio, precio_un, stock, cat, fabricante);
+            }
+            
+            br.close();
+            fr.close();
+        }catch(FileNotFoundException fnf){
+            throw new TiendaException("Fichero no encontrado");
+        }catch(IOException io){
+            throw new TiendaException("Error de lectura del fichero");
+        }catch(NumberFormatException nfe){
+            throw new TiendaException("Error en formato numérico");
+        }
+    }
+    
+    public void guardarProducto(String nombre_fichero){
+        try{
+            FileWriter fw=new FileWriter(nombre_fichero);
+            PrintWriter pw=new PrintWriter(fw);
+            
+            pw.println("producto:precio:stock:unidades:cat:fabricante:precio_un");
+            
+            for (Producto prod : this.almacen.values()) {
+                pw.println(prod.getProducto()+":"+prod.getPrecio()+":"+prod.getStock()+":"+
+                        prod.getUnidades()+":"+prod.getCat()+":"+prod.getFabricante()+":"+
+                        prod.getPr_un());
+            }
+            
+            pw.close();
+            fw.close();
+        }catch(IOException io){
+            throw new TiendaException("Fallo de escritura del fichero");
+        }
     }
 
 }

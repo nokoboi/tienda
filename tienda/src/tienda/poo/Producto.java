@@ -26,8 +26,24 @@ public class Producto {
         }
     };
 
-    public Producto(String producto, double precio, int stock, int unidades, char cat, String fabricante, double precio_un) {
-        if (!producto.equals("") && precio > 0 && stock > 0 && unidades > 0 && this.tipos.containsKey(cat) && fabricante.equals("") && precio_un > 0) {
+    public Producto(String producto, double precio, double precio_un, int stock, int unidades, char cat, String fabricante) {
+        if (producto.equals("")){
+           throw new TiendaException("Error: el nombre no puede estar vacío");
+        }else if(precio<0){
+            throw new TiendaException("Error: el precio debe ser mayor de 0");
+        }else if(stock<0){
+            throw new TiendaException("Error: el stock no puede ser menor de 0");
+        }else if(precio<0){
+            throw new TiendaException("Error: el precio no puede ser menor de 0");
+        }else if(fabricante.equals("")){
+            throw new TiendaException("Error: el fabricante no puede estar vacio");
+        }else if(precio_un>precio){
+            throw new TiendaException("Error: el coste no puede ser mayor del precio");
+        }else if(unidades<0){
+            throw new TiendaException("Error: las unidades no pueden ser menor de 0");
+        }else if(!tipos.containsKey(cat)){
+            throw new TiendaException("Error: categoría inválida");
+        }else{
             this.producto = producto;
             this.precio = precio;
             this.stock = stock;
@@ -37,14 +53,24 @@ public class Producto {
             this.pr_un = precio_un;
             this.codigo = this.contador;
             this.contador++;
-        } else {
-            throw new TiendaException("ERROR: Datos de tienda incorrectos.");
-        }
+        } 
 
     }
 
     public Producto(String producto, double precio, int stock, char cat, String fabricante, double precio_un) {
-        if (!producto.equals("") && precio > 0 && stock > 0 && this.tipos.containsKey(cat) && fabricante.equals("") && precio_un > 0) {
+        if (producto.equals("")){
+           throw new TiendaException("Error: el nombre no puede estar vacío");
+        }else if(precio<0){
+            throw new TiendaException("Error: el precio debe ser mayor de 0");
+        }else if(stock<0){
+            throw new TiendaException("Error: el stock no puede ser menor de 0");
+        }else if(!this.tipos.containsKey(cat)){
+            throw new TiendaException("Error: categoría no válida");
+        }else if(fabricante.equals("")){
+            throw new TiendaException("Error: el fabricante no puede estar vacio");
+        }else if(precio_un>precio){
+            throw new TiendaException("Error: el coste no puede ser mayor que el precio");
+        }else{
             this.producto = producto;
             this.precio = precio;
             this.stock = stock;
@@ -54,8 +80,6 @@ public class Producto {
             this.unidades = 0;
             this.codigo = this.contador;
             this.contador++;
-        }else{
-            throw new TiendaException("ERROR: DAtos de tienda incorrectos");
         }
     }
 
@@ -131,13 +155,14 @@ public class Producto {
 
     public void vender(int cantidad) {
         if (cantidad > this.stock) {
-            System.out.println("No hay suficiente stock, se han vendido " + this.stock);
             this.unidades += this.stock;
+            int copiaStock=this.stock;
             this.stock = 0;
+            throw new TiendaException("No hay suficiente stock, se han vendido "+copiaStock);            
         } else {
             this.stock -= cantidad;
             this.unidades += cantidad;
-            throw new TiendaException("Venta realizada con éxito");
+
         }
     }
 
@@ -151,7 +176,6 @@ public class Producto {
 
     public void reponerStock(int stock) {
         this.stock += stock;
-        System.out.println("Stock repuesto con éxito");
     }
 
     public void cambiarPu(double precio) {

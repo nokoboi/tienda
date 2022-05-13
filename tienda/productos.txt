@@ -1,0 +1,8 @@
+producto:precio:stock:unidades:cat:fabricante:precio_un
+Alhambra Especial:2.5:300:0:C:Cervezas Alhambra S.A:1.25
+Cune Crianza 2019:48.1:15:0:V:Bodegas Bela:37.0
+Barceló:14.3:50:0:R:Ron Barceló S.R.L:10.75
+Alhambra 1925:3.0:150:0:C:Cervezas Alhambra S.A:2.0
+Chivas 12 años:12.7:50:0:W:Pernod Ricard:10.0
+Chivas 15 años:16.5:25:0:W:Pernod Ricard:12.2
+Tanqueray:32.95:40:0:G:Diageo España S.A:27.8
